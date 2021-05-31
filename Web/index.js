@@ -130,7 +130,7 @@ $(document).ready(function(){
                 })
                 $('.animated-btn').css({
                     'pointer-events' : 'auto',
-                }).html('Please try again!')
+                }).html('Username taken')
             }, 3000)
         }
     }

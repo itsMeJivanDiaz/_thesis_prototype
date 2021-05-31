@@ -41,7 +41,26 @@ if(isset($_POST['name'])){
 
     $sql_establishment = "INSERT INTO `establishment` (`est_ID`, `est_name`, `est_type`, `est_count_info_ID`, `est_loc_ID`, `est_acc_ID`, `est_date_time_cr`) VALUES (?, ?, ?, ?, ?, ?, ?);";
 
+    $sql_check = "SELECT * FROM account WHERE acc_user = ?;";
+
     $stmt = mysqli_stmt_init($conn);
+
+    function check_user($process, $db, $statement, $user){
+       
+        if(!mysqli_stmt_prepare($statement, $process)){
+            return false;
+        }else{
+            mysqli_stmt_bind_param($statement, 's', $user);
+            mysqli_stmt_execute($statement);
+            $res = mysqli_stmt_get_result($statement);
+            if(mysqli_fetch_assoc($res) > 0){
+                return true;
+            }else{
+                return false;
+            }
+        }
+
+    }
 
     function register_account($process, $db, $statement, $id, $logo, $user, $pass, $dt){
 
@@ -89,16 +108,21 @@ if(isset($_POST['name'])){
         }
     }
 
-    $first_p = register_account($sql_account, $conn, $stmt, $uid_acc, 'None', $username, $password, $date_time);
+    $_process = check_user($sql_check, $conn, $stmt, $username);
 
-    if($first_p == true){
-        $second_p = register_count($sql_count, $conn, $stmt, $uid_cnt, $count, $date_time);
-        if($second_p == true){
-            $third_p = register_location($sql_location, $conn, $stmt, $uid_loc, $city, $branch, $barangay, $lat, $long, $date_time);
-            if($third_p == true){
-                $last = register_establishment($sql_establishment, $conn, $stmt, $uid_est, $name, $type, $uid_cnt, $uid_loc, $uid_acc, $date_time);
-                if($last == true){
-                    echo "Registration Success";
+    if($_process == false){
+        $first_p = register_account($sql_account, $conn, $stmt, $uid_acc, 'None', $username, $password, $date_time);
+        if($first_p == true){
+            $second_p = register_count($sql_count, $conn, $stmt, $uid_cnt, $count, $date_time);
+            if($second_p == true){
+                $third_p = register_location($sql_location, $conn, $stmt, $uid_loc, $city, $branch, $barangay, $lat, $long, $date_time);
+                if($third_p == true){
+                    $last = register_establishment($sql_establishment, $conn, $stmt, $uid_est, $name, $type, $uid_cnt, $uid_loc, $uid_acc, $date_time);
+                    if($last == true){
+                        echo "Registration Success";
+                    }else{
+                        echo "Something went wrong";
+                    }
                 }else{
                     echo "Something went wrong";
                 }
@@ -109,8 +133,9 @@ if(isset($_POST['name'])){
             echo "Something went wrong";
         }
     }else{
-        echo "Something went wrong";
+        echo "Username is taken";
     }
+
 
 }
 

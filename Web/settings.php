@@ -9,7 +9,7 @@ if(isset($_POST['cap'])){
     $limitation = $_POST['lim'];
 
     $sql_select = "SELECT * FROM establishment WHERE est_acc_ID = ?;";
-    $sql_update = "UPDATE count_info SET count_normal_cap = ?, count_allowable_capacity = ? WHERE count_info_ID = ?;";
+    $sql_update = "UPDATE count_info SET count_normal_capacity = ?, count_allowable_capacity = ? WHERE count_info_ID = ?;";
     $stmt = mysqli_stmt_init($conn);
 
     if(!mysqli_stmt_prepare($stmt, $sql_select)){
