@@ -1,0 +1,180 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>
+        CIMO Control Panel
+    </title>
+    <link rel="stylesheet" href="https://unpkg.com/leaflet@1.7.1/dist/leaflet.css" />
+    <link rel="stylesheet" href="https://unpkg.com/leaflet-control-geocoder/dist/Control.Geocoder.css" />
+    <link href="icons/fontawesome-free-5.15.3-web/css/all.css" rel="stylesheet">
+    <link rel="shortcut icon" type="image/png" href="images/CIMO.png">
+    <link rel="stylesheet" href="index.css">
+</head>
+<body>
+    <script src="/eel.js"></script>
+    <script src="https://unpkg.com/leaflet@1.7.1/dist/leaflet.js"></script>
+    <script src="https://unpkg.com/leaflet-control-geocoder/dist/Control.Geocoder.js"></script>
+    <script src="jquery.js"></script>
+    <script src="index.js"></script> 
+    <div id="allow-container">
+        <div id="wrapper">
+            <section id="welcome-banner">
+                <div id="welcome-text">
+                    <img id="camera" src="images/camera-icon.png">
+                    <h1 class="font-1 color-2"> <span id=brand>Hi! Welcome to CIMO.</span></h1>
+                    <p class="font-2 color-1"> Crowd-Counter with Integrative Mobile Application.</p>
+                </div>
+                <span class="divider bgc-2"></span>
+                <div id="index-buttons">
+                    <button id="reg-btn" class="bold round-button bgc-3 font-2 color-4">
+                        <i class="fas fa-pencil-alt i-left"></i>
+                        Register 
+                    </button>
+                    <br>
+                    <p class="font-3 color-1">OR</p>
+                    <br>
+                    <button id="log-btn" class="bold round-button bgc-4 font-2 color-4">
+                        <i class="fas fa-sign-in-alt i-left"></i>
+                        Log in  
+                    </button>
+                </div>
+            </section>
+        </div>
+        <div id="reg-form-holder" class="">
+            <div id="circle-anim" class="bgc-3">
+                <button id="back" class="back"><i class="fas fa-chevron-left"></i></button>
+                 <form method="POST" name="reg-form" id="reg-form-id" class="form-card bgc-5">
+                    <div class="form-head bgc-2">
+                        <p class="font-4 color-4 bold"><i class="fas fa-pencil-alt color-4 i-left"></i> Registration Form</p>
+                        <p class="font-2 bold text-shadow">CIMO.</p>
+                    </div>
+                    <div class="form-body">
+                        <div class="input-holder">
+                            <section class="icon-box">
+                                <i class="fas fa-building text-shadow-dark"></i>
+                            </section>
+                            <input autocomplete="off" name="establishment-name" value="" class="font-3" placeholder="Establishment Name">
+                        </div>
+                        <div class="input-holder">
+                            <section class="icon-box">
+                                <i class="fas fa-city text-shadow-dark"></i>
+                            </section>
+                            <input autocomplete="off" name="city" id="city" class="font-3" placeholder="City">
+                        </div>
+                        <div class="flex">
+                            <div class="input-holder">
+                                <section class="icon-box">
+                                    <i class="fas fa-road text-shadow-dark"></i>
+                                </section>
+                                <input autocomplete="off" name="branch" id="branch" class="font-3" placeholder="Street or Branch">
+                            </div>
+                            <div class="input-holder">
+                                <section class="icon-box">
+                                    <i class="fas fa-sign text-shadow-dark"></i>
+                                </section>
+                                <input autocomplete="off" name="brgy" id="brgy" class="font-3" placeholder="Barangay or Area">
+                            </div>
+                        </div>
+                        <div class="input-holder">
+                            <section class="icon-box">
+                                <i class="fas fa-map-marker-alt text-shadow-dark"></i>
+                            </section>
+                            <input autocomplete="off" name="latlong" id="loc-input" class="font-3" placeholder="Establishment Coordinates">
+                            <button type="button" id="location"><i class="loc fas fa-map-marked-alt text-shadow-dark"></i></button>
+                        </div>
+                        <div class="input-holder">
+                            <section class="icon-box">
+                                <i class="fas fa-store text-shadow-dark"></i>
+                            </section>
+                            <select autocomplete="off" name="establishment-type" class="font-3" id="establishment-type">
+                                <option value="" selected class="color-3">Establishment Type</option>
+                                <option value="Fast food">Fast Food</option>
+                                <option value="Supermarket">Supermarket</option>
+                                <option value="Spplies">Supplies</option>
+                            </select>
+                        </div>
+                        <div class="input-holder">
+                            <section class="icon-box text-shadow-dark">
+                                <i class="fas fa-user-tag"></i>
+                            </section>
+                            <input autocomplete="off" name="username" id="user" class="font-3" placeholder="Establishment Usercode">
+                        </div>
+                        <div class="input-holder">
+                            <section class="icon-box text-shadow-dark">
+                                <i class="fas fa-lock"></i>
+                            </section>
+                            <input type="password" autocomplete="off" name="passoword" id="pass" class="font-3" placeholder="Establishment Passcode">
+                        </div>
+                        <div class="divider bgc-2"></div>
+                        <button name="reg-btn" id="register-button" type="submit" class="form-button">Proceed <i class="fas fa-arrow-right color-4"></i></button>
+                    </div>
+                 </form>
+            </div>
+        </div>
+        <div id="log-form-holder">
+            <div id="width-anim" class="bgc-4">
+                <button id="back" class="back"><i class="fas fa-chevron-left"></i></button>
+                <form id="log-in-form" class="form-card bgc-5">
+                    <div class="form-head bgc-2">
+                        <p class="font-4 color-4 bold"><i class="fas fa-sign-in-alt color-4 i-left"></i> Log-in Form</p>
+                        <p class="font-2 bold text-shadow">CIMO.</p>
+                    </div>
+                    <div class="form-body">
+                        <div class="input-holder">
+                            <section class="icon-box text-shadow-dark">
+                                <i class="fas fa-user-tag"></i>
+                            </section>
+                            <input autocomplete="off" name="user-login" class="font-3" placeholder="Establishment Usercode">
+                        </div>
+                        <div class="input-holder">
+                            <section class="icon-box text-shadow-dark">
+                                <i class="fas fa-lock"></i>
+                            </section>
+                            <input type="password" autocomplete="off" name="pass-login" class="font-3" placeholder="Establishment Passcode">
+                        </div>
+                        <div class="divider bgc-2"></div>
+                        <button type="submit" class="form-button">Proceed <i class="fas fa-arrow-right color-4"></i></button>
+                    </div>
+                </form>
+            </div>
+        </div>
+        <div id="loading-box">
+            <div id="loading-message">
+                <div id="loading-widget">
+                    <div id="loading-widget-bg">
+
+                    </div>
+                </div>
+                <br>
+                <button class="animated-btn bgc-5 font-3">Please wait</button>
+            </div>
+        </div>
+    </div>
+    <div id="not-allowed-container">
+        <i class="fas fa-bomb color-4 text-shadow-dark"></i>
+        <br>
+        <p class="font-2 color-4">Oops! sorry, this screen is not yet maintained.</p>
+        <br>
+        <button id="resize" class="form-button bgc-4 font-1 bold box-shadow">Go Back!</button>
+    </div>
+    <div id="map-holder">
+        <button id="close-map"><i class="fas fa-times"></i></button>
+        <div id="map" ></div>
+    </div>
+    <div id="controller">
+        <div id="controls">
+            <button data-do="on" class="ctrl-btn"><i class="fas fa-plug color-1 font-5"></i></button>
+            <button data-do="set" class="ctrl-btn"><i class="fas fa-cogs color-1 font-5"></i></button>
+            <button data-do="extend" class="ctrl-btn"><i class="fas fa-tv color-1 font-5"></i></button>
+            <button data-do="report" class="ctrl-btn"><i class="fas fa-chart-line color-1 font-5"></i></button>
+            <button data-do="off" class="ctrl-btn"><i class="fas fa-power-off color-1 font-5"></i></button>
+        </div>
+    </div>
+    <div id="snuck-bar">
+        
+    </div>
+</body>
+</html>

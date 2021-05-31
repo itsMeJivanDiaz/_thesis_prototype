@@ -1,0 +1,115 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>
+        Extended CIMO Display
+    </title>
+    <link rel="shortcut icon" type="image/png" href="images/CIMO.png">
+    <link href="icons/fontawesome-free-5.15.3-web/css/all.css" rel="stylesheet">
+    <style>
+        *{
+            margin: 0;
+            padding: 0;
+        }
+        body,html{
+            height: 100%;
+            background-color: #86e3ce;
+            margin: 0;
+            padding: 0;
+        }
+        #wrapper{
+            height: 100%;
+            background-color: #86e3ce;
+            display: flex;
+            align-items: center;
+            justify-content: space-evenly;
+        }
+        .box{
+            height: 350px;
+            width: 350px;
+            background-color: white;
+            border-radius: 4px;
+            box-shadow: 5px 5px 0px #616161;
+            overflow: hidden;
+            box-sizing: border-box;
+            padding: 0px 10px 0px 10px;
+        }
+        .header{
+            height: 45px;
+            width: 100%;
+            background-color: transparent;
+            display: flex;
+            align-items: center;
+            justify-content: start;
+            border-bottom: 1px solid #808080;
+        }
+        p{
+            font-family: 'Roboto';
+            font-size: 17px;
+            color: #808080;
+            margin-left: 15px;
+        }
+        p i{
+            color: #fa897b;
+            font-size: 15px;
+        }
+        .body{
+            height: 290px;
+            width: 100%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            background-color: transparent;
+        }
+        h1{
+            font-size: 140px;
+            font-family: 'Roboto';
+            color: #616161;
+        }
+    </style>
+</head>
+<body>
+    <script src="/eel.js"></script>
+    <script src="jquery.js"></script>
+    <script>
+        $(document).ready(function(){
+            window.resizeTo(1000, 690);
+            var set = 0;
+            var init = 0;
+            eel.expose(get_data_num);
+            function get_data_num(data){
+                console.log(data)
+                if(set == 0){
+                    set = 1;
+                    init = data;
+                }else{
+                    $('#cap').html(data);
+                    $('#cur').html(init - data)
+                }
+            }
+
+        })
+    </script>
+    <div id="wrapper">
+        <div class="box">
+            <div class="header">
+                <p><i class="fas fa-door-open"></i> &nbsp;&nbsp;Available capacity</p>
+            </div>
+            <div class="body">
+                <h1 id="cap">00</h1>
+            </div>
+        </div>
+        <div class="box">
+            <div class="header">
+                <p><i class="fas fa-users"></i> &nbsp;&nbsp;Current people inside</p>
+            </div>
+            <div class="body">
+                <h1 id="cur">00</h1>
+            </div>
+        </div>
+    </div>
+</body>
+</html>
