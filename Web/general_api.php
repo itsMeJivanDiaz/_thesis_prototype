@@ -22,7 +22,6 @@ if(isset($_GET['all'])){
     }else{
         mysqli_stmt_execute($stmt);
         $result = mysqli_stmt_get_result($stmt);
-        $est_count = 1;
         while($row = mysqli_fetch_assoc($result)){
             $loc_id = $row['est_loc_ID'];
             $acc_id = $row['est_acc_ID'];
@@ -36,28 +35,28 @@ if(isset($_GET['all'])){
                 mysqli_stmt_execute($stmt);
                 $res = mysqli_stmt_get_result($stmt);
                 while($row = mysqli_fetch_assoc($res)){
-                    $json_data = array(
-                        'est#' . $est_count => array(
-                            'establishment-name' => $row['est_name'],
-                            'establishment-type' => $row['est_type'],
-                            'city' => $row['loc_city'],
-                            'branch-street' => $row['loc_branch_str'],
-                            'barangay-area' => $row['loc_brgy'],
-                            'latitude' => $row['loc_lat'],
-                            'longitude' => $row['loc_long'],
-                            'allowed-capacity' => $row['count_allowable_capacity'],
-                            'normal-capacity' => $row['count_normal_capacity'],
-                            'available-capacity' => $row['count_available'],
-                            'establishment-ID' => $row['est_ID'],
-                            'location-ID' => $row['loc_loc_ID'],
-                            'account-ID' => $row['acc_acc_ID'],
-                        ),
+                    $array = array(
+                        'establishment-name' => $row['est_name'],
+                        'establishment-type' => $row['est_type'],
+                        'city' => $row['loc_city'],
+                        'branch-street' => $row['loc_branch_str'],
+                        'barangay-area' => $row['loc_brgy'],
+                        'latitude' => $row['loc_lat'],
+                        'longitude' => $row['loc_long'],
+                        'allowed-capacity' => $row['count_allowable_capacity'],
+                        'normal-capacity' => $row['count_normal_capacity'],
+                        'available-capacity' => $row['count_available'],
+                        'current-crowd' => $row['count_current'],
+                        'limited-capacity' => $row['count_normal_capacity'] * $row['count_allowable_capacity'],
+                        'establishment-ID' => $row['est_ID'],
+                        'location-ID' => $row['loc_loc_ID'],
+                        'account-ID' => $row['acc_acc_ID'],
                     );
+                    array_push($json_data,  $array);
                 }
             }
-            echo json_encode($json_data, JSON_PRETTY_PRINT);
-            $est_count++;
         }
+        echo json_encode($json_data, JSON_PRETTY_PRINT);
     }
 }else{
     echo 'butsog';

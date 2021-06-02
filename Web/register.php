@@ -30,8 +30,6 @@ if(isset($_POST['name'])){
     $lat = $coords[0];
     $long = $coords[1];
 
-    
-
     $sql_account = "INSERT INTO `account` (`acc_acc_ID`, `acc_logo`, `acc_user`, `acc_pass`, `acc_date_time_cr`) VALUES (?, ?, ?, ?, ?);";
 
     $sql_count = "INSERT INTO `count_info` (`count_info_ID`, `count_allowable_capacity`, `count_current`, `count_available`, `count_date_time_cr`)

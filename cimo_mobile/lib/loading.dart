@@ -1,3 +1,5 @@
+import 'package:cimo_mobile/home.dart';
+import 'package:cimo_mobile/jsonData.dart';
 import 'package:flutter/material.dart';
 // ignore: import_of_legacy_library_into_null_safe
 import 'package:flutter_spinkit/flutter_spinkit.dart';
@@ -8,14 +10,29 @@ class LoadingView extends StatefulWidget {
 }
 
 class _LoadingViewState extends State<LoadingView> {
-  void say() async {
-    print('hello');
+  void initData() async {
+    All_Establishment est_instance = All_Establishment();
+    await est_instance.getData();
+    List resp_data = est_instance.data;
+    Future.delayed(
+      Duration(seconds: 3),
+      () {
+        Navigator.pushReplacement(
+          context,
+          MaterialPageRoute(
+            builder: (context) => HomeView(
+              data: resp_data,
+            ),
+          ),
+        );
+      },
+    );
   }
 
   @override
   void initState() {
     super.initState();
-    say();
+    initData();
   }
 
   @override
