@@ -1,4 +1,5 @@
 import 'package:cimo_mobile/specific.dart';
+import 'package:cimo_mobile/specific_json.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'dart:math';
@@ -44,6 +45,27 @@ class _HomeViewState extends State<HomeView> {
   getfirstletter(String string) {
     String mystring = string;
     return '${mystring[0]}';
+  }
+
+  void getSpecific(String id) async {
+    SpecificEstablishment spec_instance = SpecificEstablishment(ref_id: id);
+    await spec_instance.getSpec();
+    Navigator.push(
+      context,
+      MaterialPageRoute(
+        builder: (context) => EstablishmentInfo(
+          id: id,
+          name: spec_instance.data[0]['establishment-name'],
+          lat: spec_instance.data[0]['latitude'],
+          long: spec_instance.data[0]['longitude'],
+          city: spec_instance.data[0]['city'],
+          branch: spec_instance.data[0]['branch-street'],
+          barangay: spec_instance.data[0]['barangay-area'],
+          limit: spec_instance.data[0]['limited-capacity'],
+          current: spec_instance.data[0]['current-crowd'],
+        ),
+      ),
+    );
   }
 
   @override
@@ -92,7 +114,7 @@ class _HomeViewState extends State<HomeView> {
             Padding(
               padding: const EdgeInsets.fromLTRB(14, 0, 14, 0),
               child: Container(
-                height: 780,
+                height: MediaQuery.of(context).size.height,
                 child: ListView.builder(
                   physics: BouncingScrollPhysics(),
                   itemCount: widget.data.length,
@@ -105,24 +127,8 @@ class _HomeViewState extends State<HomeView> {
                         child: InkWell(
                           splashColor: colors[changeidx()],
                           onTap: () {
-                            Navigator.push(
-                              context,
-                              MaterialPageRoute(
-                                builder: (context) => EstablishmentInfo(
-                                  name: widget.data[index]
-                                      ['establishment-name'],
-                                  lat: widget.data[index]['latitude'],
-                                  long: widget.data[index]['longitude'],
-                                  city: widget.data[index]['city'],
-                                  branch: widget.data[index]['branch-street'],
-                                  area: widget.data[index]['barangay-area'],
-                                  allowed: widget.data[index]
-                                      ['limited-capacity'],
-                                  available: widget.data[index]
-                                      ['available-capacity'],
-                                  current: widget.data[index]['current-crowd'],
-                                ),
-                              ),
+                            getSpecific(
+                              widget.data[index]['establishment-ID'],
                             );
                           },
                           child: Container(
@@ -182,7 +188,8 @@ class _HomeViewState extends State<HomeView> {
                                       ),
                                     ),
                                     Text(
-                                      widget.data[index]['barangay-area'],
+                                      widget.data[index]['barangay-area'] +
+                                          ' Area',
                                       style: TextStyle(
                                         fontFamily: 'Montserrat',
                                         fontSize: 14,

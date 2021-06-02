@@ -8,14 +8,14 @@ if(isset($_POST['name'])){
     return substr(str_shuffle($str_result),  0, $length_of_string); 
     } 
 
-    $uniqid_gen_cnt = uniqid('ID#cnt=');
-    $uniqid_gen_loc = uniqid('ID#loc=');
-    $uniqid_gen_acc = uniqid('ID#acc=');
-    $uniqid_gen_est = uniqid('ID#est=');
-    $uid_cnt = $uniqid_gen_cnt . random_strings(10);
-    $uid_acc = $uniqid_gen_acc . random_strings(10);
-    $uid_loc = $uniqid_gen_loc . random_strings(10);
-    $uid_est = $uniqid_gen_est . random_strings(10);
+    $uniqid_gen_cnt = uniqid('IDcnt=');
+    $uniqid_gen_loc = uniqid('IDloc=');
+    $uniqid_gen_acc = uniqid('IDacc=');
+    $uniqid_gen_est = uniqid('IDest=');
+    $uid_cnt = $uniqid_gen_cnt . random_strings(11);
+    $uid_acc = $uniqid_gen_acc . random_strings(11);
+    $uid_loc = $uniqid_gen_loc . random_strings(11);
+    $uid_est = $uniqid_gen_est . random_strings(11);
     $name = $_POST['name'];
     $city = $_POST['city'];
     $branch = $_POST['branch'];
