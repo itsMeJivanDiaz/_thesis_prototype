@@ -210,6 +210,7 @@ $(document).ready(function(){
             $('.ctrl-btn').children().removeClass('color-2')
             $('#controller').removeClass('controller-active')
             $('#snuck-bar').removeClass('s-active')
+            eel.log_out()
         })
         $('#set').click(function(e){
             e.preventDefault()

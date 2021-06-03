@@ -146,7 +146,7 @@ class _EstablishmentInfoState extends State<EstablishmentInfo> {
                   double.parse(widget.lat),
                   double.parse(widget.long),
                 ),
-                zoom: 18,
+                zoom: 15,
               ),
               markers: _markers,
               zoomControlsEnabled: false,
@@ -183,19 +183,21 @@ class _EstablishmentInfoState extends State<EstablishmentInfo> {
                         SizedBox(
                           width: 15,
                         ),
-                        Text(
-                          '@ ' +
-                              widget.city +
-                              ', ' +
-                              widget.branch +
-                              ', ' +
-                              widget.barangay +
-                              ' Area',
-                          style: TextStyle(
-                            fontSize: 16,
-                            fontFamily: 'Montserrat',
-                            color: Color(0xff808080),
-                            fontWeight: FontWeight.bold,
+                        Flexible(
+                          child: Text(
+                            '@ ' +
+                                widget.city +
+                                ', ' +
+                                widget.branch +
+                                ', ' +
+                                widget.barangay +
+                                ' Area',
+                            style: TextStyle(
+                              fontSize: 16,
+                              fontFamily: 'Montserrat',
+                              color: Color(0xff808080),
+                              fontWeight: FontWeight.bold,
+                            ),
                           ),
                         ),
                       ],

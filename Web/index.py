@@ -60,6 +60,9 @@ def set_settings(data):
 def start_extended():
    eel.start('Web/extended.html', port=0)
 
+@eel.expose
+def log_out():
+   print('hello')
 
 @eel.expose
 def start_cam(data):

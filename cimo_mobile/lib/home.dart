@@ -3,6 +3,7 @@ import 'package:cimo_mobile/specific_json.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'dart:math';
+import 'package:cimo_mobile/jsonData.dart';
 
 // ignore: must_be_immutable
 class HomeView extends StatefulWidget {
@@ -45,6 +46,14 @@ class _HomeViewState extends State<HomeView> {
   getfirstletter(String string) {
     String mystring = string;
     return '${mystring[0]}';
+  }
+
+  Future<void> _refresh() async {
+    All_Establishment est_instance = All_Establishment();
+    await est_instance.getData();
+    setState(() {
+      widget.data = est_instance.data;
+    });
   }
 
   void getSpecific(String id) async {
@@ -114,96 +123,103 @@ class _HomeViewState extends State<HomeView> {
             Padding(
               padding: const EdgeInsets.fromLTRB(14, 0, 14, 0),
               child: Container(
-                height: MediaQuery.of(context).size.height,
-                child: ListView.builder(
-                  physics: BouncingScrollPhysics(),
-                  itemCount: widget.data.length,
-                  itemBuilder: (context, index) {
-                    return Padding(
-                      padding: const EdgeInsets.fromLTRB(8, 20, 8, 10),
-                      child: Material(
-                        borderRadius: BorderRadius.circular(15),
-                        color: Colors.white,
-                        child: InkWell(
-                          splashColor: colors[changeidx()],
-                          onTap: () {
-                            getSpecific(
-                              widget.data[index]['establishment-ID'],
-                            );
-                          },
-                          child: Container(
-                            padding: EdgeInsets.fromLTRB(25, 0, 25, 0),
-                            height: 130,
-                            decoration: BoxDecoration(
-                              borderRadius: BorderRadius.circular(20),
-                            ),
-                            child: Row(
-                              crossAxisAlignment: CrossAxisAlignment.center,
-                              children: <Widget>[
-                                Container(
-                                  height: 60,
-                                  width: 60,
-                                  decoration: BoxDecoration(
-                                    color: colors[changeidx()],
-                                    borderRadius: BorderRadius.circular(10),
-                                  ),
-                                  child: Center(
-                                    child: Text(
-                                      getfirstletter(
-                                        widget.data[index]['establishment-name']
-                                            .toString(),
-                                      ),
-                                      style: TextStyle(
-                                        fontSize: 30,
-                                        color: Colors.white,
-                                        fontFamily: 'Montserrat',
-                                        fontWeight: FontWeight.bold,
+                height: MediaQuery.of(context).size.height - 100,
+                child: RefreshIndicator(
+                  onRefresh: _refresh,
+                  child: ListView.builder(
+                    physics: BouncingScrollPhysics(),
+                    itemCount: widget.data.length,
+                    itemBuilder: (context, index) {
+                      return Padding(
+                        padding: const EdgeInsets.fromLTRB(8, 20, 8, 0),
+                        child: Material(
+                          borderRadius: BorderRadius.circular(15),
+                          color: Colors.white,
+                          child: InkWell(
+                            splashColor: colors[changeidx()],
+                            onTap: () {
+                              getSpecific(
+                                widget.data[index]['establishment-ID'],
+                              );
+                            },
+                            child: Container(
+                              padding: EdgeInsets.fromLTRB(25, 0, 25, 0),
+                              height: 130,
+                              decoration: BoxDecoration(
+                                borderRadius: BorderRadius.circular(20),
+                              ),
+                              child: Row(
+                                crossAxisAlignment: CrossAxisAlignment.center,
+                                children: <Widget>[
+                                  Container(
+                                    height: 60,
+                                    width: 60,
+                                    decoration: BoxDecoration(
+                                      color: colors[changeidx()],
+                                      borderRadius: BorderRadius.circular(10),
+                                    ),
+                                    child: Center(
+                                      child: Text(
+                                        getfirstletter(
+                                          widget.data[index]
+                                                  ['establishment-name']
+                                              .toString(),
+                                        ),
+                                        style: TextStyle(
+                                          fontSize: 30,
+                                          color: Colors.white,
+                                          fontFamily: 'Montserrat',
+                                          fontWeight: FontWeight.bold,
+                                        ),
                                       ),
                                     ),
                                   ),
-                                ),
-                                SizedBox(
-                                  width: 15,
-                                ),
-                                Column(
-                                  mainAxisAlignment: MainAxisAlignment.center,
-                                  crossAxisAlignment: CrossAxisAlignment.start,
-                                  children: [
-                                    Text(
-                                      widget.data[index]['establishment-name'],
-                                      style: TextStyle(
-                                        fontFamily: 'Montserrat',
-                                        fontSize: 15,
-                                        fontWeight: FontWeight.bold,
+                                  SizedBox(
+                                    width: 15,
+                                  ),
+                                  Column(
+                                    mainAxisAlignment: MainAxisAlignment.center,
+                                    crossAxisAlignment:
+                                        CrossAxisAlignment.start,
+                                    children: [
+                                      Text(
+                                        widget.data[index]
+                                            ['establishment-name'],
+                                        style: TextStyle(
+                                          fontFamily: 'Montserrat',
+                                          fontSize: 15,
+                                          fontWeight: FontWeight.bold,
+                                        ),
                                       ),
-                                    ),
-                                    Text(
-                                      '@ ' +
-                                          widget.data[index]['branch-street'] +
-                                          ', ' +
-                                          widget.data[index]['city'],
-                                      style: TextStyle(
-                                        fontFamily: 'Montserrat',
-                                        fontSize: 14,
+                                      Text(
+                                        '@ ' +
+                                            widget.data[index]
+                                                ['branch-street'] +
+                                            ', ' +
+                                            widget.data[index]['city'],
+                                        style: TextStyle(
+                                          fontFamily: 'Montserrat',
+                                          fontSize: 14,
+                                        ),
                                       ),
-                                    ),
-                                    Text(
-                                      widget.data[index]['barangay-area'] +
-                                          ' Area',
-                                      style: TextStyle(
-                                        fontFamily: 'Montserrat',
-                                        fontSize: 14,
+                                      Text(
+                                        widget.data[index]['barangay-area'] +
+                                            ' Area',
+                                        style: TextStyle(
+                                          fontFamily: 'Montserrat',
+                                          fontSize: 14,
+                                        ),
                                       ),
-                                    ),
-                                  ],
-                                ),
-                              ],
+                                    ],
+                                  ),
+                                ],
+                              ),
                             ),
                           ),
                         ),
-                      ),
-                    );
-                  },
+                      );
+                    },
+                  ),
                 ),
               ),
             ),
