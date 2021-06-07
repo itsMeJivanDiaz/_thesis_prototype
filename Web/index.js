@@ -203,6 +203,7 @@ $(document).ready(function(){
         })
         $('#log-out').click(function(e){
             e.preventDefault();
+            eel.log_out(sessionStorage.getItem('sessionID'))
             sessionStorage.removeItem('sessionID')
             $('#allow-container').css({
                 'display' : 'flex'
@@ -210,7 +211,6 @@ $(document).ready(function(){
             $('.ctrl-btn').children().removeClass('color-2')
             $('#controller').removeClass('controller-active')
             $('#snuck-bar').removeClass('s-active')
-            eel.log_out()
         })
         $('#set').click(function(e){
             e.preventDefault()

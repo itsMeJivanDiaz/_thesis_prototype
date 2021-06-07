@@ -25,7 +25,7 @@ if(isset($_POST['id'])){
             mysqli_stmt_execute($stmt);
             $result = mysqli_stmt_get_result($stmt);
             $row = mysqli_fetch_assoc($result);
-            $normal = $row['count_normal_cap'];
+            $normal = $row['count_normal_capacity'];
             $limit = $row['count_allowable_capacity'];
             $max_limit = $normal * $limit;
             echo json_encode(array(
