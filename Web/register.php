@@ -133,8 +133,6 @@ if(isset($_POST['name'])){
     }else{
         echo "Username is taken";
     }
-
-
 }
 
 ?>
