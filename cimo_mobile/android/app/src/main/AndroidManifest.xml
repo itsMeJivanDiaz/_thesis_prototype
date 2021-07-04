@@ -1,7 +1,7 @@
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
-    package="com.example.cimo_mobile">
+    package="com.example.cimo_m">
    <application
-        android:label="cimo_mobile"
+        android:label="cimo_m"
         android:icon="@mipmap/ic_launcher">
         <activity
             android:name=".MainActivity"
@@ -38,6 +38,6 @@
             android:name="flutterEmbedding"
             android:value="2" />
         <meta-data android:name="com.google.android.geo.API_KEY"
-               android:value="AIzaSyCEFzb7AOMs6AfkdYA2dY7eoUfYZ1PPdRI"/>
+               android:value="AIzaSyDw6QFx3s9JWG4R6owgDU8QSRfIkvN65bs"/>
     </application>
 </manifest>

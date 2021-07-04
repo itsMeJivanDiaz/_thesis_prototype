@@ -1,4 +1,4 @@
-# cimo_mobile
+# cimo_m
 
 A new Flutter project.
 
