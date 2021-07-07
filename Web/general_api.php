@@ -39,6 +39,7 @@ if(isset($_GET['all'])){
                         'establishment-name' => $row['est_name'],
                         'establishment-type' => $row['est_type'],
                         'city' => $row['loc_city'],
+                        'logo'=> $row['acc_logo'],
                         'branch-street' => $row['loc_branch_str'],
                         'barangay-area' => $row['loc_brgy'],
                         'latitude' => $row['loc_lat'],
@@ -94,6 +95,7 @@ if(isset($_GET['all'])){
                         'establishment-name' => $row['est_name'],
                         'establishment-type' => $row['est_type'],
                         'city' => $row['loc_city'],
+                        'logo'=> $row['acc_logo'],
                         'branch-street' => $row['loc_branch_str'],
                         'barangay-area' => $row['loc_brgy'],
                         'latitude' => $row['loc_lat'],
@@ -117,12 +119,19 @@ if(isset($_GET['all'])){
 
     $search = $_GET['search'];
 
+    $filter = $_GET['city'];
+
     $search_array = array();
 
     $sql_search = "SELECT * FROM establishment WHERE est_name LIKE CONCAT(?,'%');";
 
-    $sql_get_search_ID = "SELECT * FROM establishment INNER JOIN location ON establishment.est_loc_ID = location.loc_loc_ID INNER JOIN account ON account.acc_acc_ID = establishment.est_acc_ID
-    INNER JOIN count_info ON count_info_ID = est_count_info_ID WHERE est_loc_ID = ? AND est_acc_ID = ? AND est_count_info_ID = ?;";
+    if($filter == "None"){
+        $sql_get_search_ID = "SELECT * FROM establishment INNER JOIN location ON establishment.est_loc_ID = location.loc_loc_ID INNER JOIN account ON account.acc_acc_ID = establishment.est_acc_ID
+        INNER JOIN count_info ON count_info_ID = est_count_info_ID WHERE est_loc_ID = ? AND est_acc_ID = ? AND est_count_info_ID = ?";
+    }else{
+        $sql_get_search_ID = "SELECT * FROM establishment INNER JOIN location ON establishment.est_loc_ID = location.loc_loc_ID INNER JOIN account ON account.acc_acc_ID = establishment.est_acc_ID
+        INNER JOIN count_info ON count_info_ID = est_count_info_ID WHERE est_loc_ID = ? AND est_acc_ID = ? AND est_count_info_ID = ? AND loc_city = ?";
+    }
 
     if(!mysqli_stmt_prepare($stmt, $sql_search)){
         echo json_encode(array(
@@ -141,7 +150,11 @@ if(isset($_GET['all'])){
                     'Response_message' => 'Something went wrong'
                 ));
             }else{
-                mysqli_stmt_bind_param($stmt, 'sss', $loc_id, $acc_id, $count_id);
+                if($filter == "None"){
+                    mysqli_stmt_bind_param($stmt, 'sss', $loc_id, $acc_id, $count_id);
+                }else{
+                    mysqli_stmt_bind_param($stmt, 'ssss', $loc_id, $acc_id, $count_id, $filter);
+                }
                 mysqli_stmt_execute($stmt);
                 $result1 = mysqli_stmt_get_result($stmt);
                 while($row = mysqli_fetch_assoc($result1)){
@@ -149,6 +162,7 @@ if(isset($_GET['all'])){
                         'establishment-name' => $row['est_name'],
                         'establishment-type' => $row['est_type'],
                         'city' => $row['loc_city'],
+                        'logo'=> $row['acc_logo'],
                         'branch-street' => $row['loc_branch_str'],
                         'barangay-area' => $row['loc_brgy'],
                         'latitude' => $row['loc_lat'],

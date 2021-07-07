@@ -14,6 +14,7 @@ class _LoadingViewState extends State<LoadingView> {
     All_Establishment est_instance = All_Establishment();
     await est_instance.getData();
     List resp_data = est_instance.data;
+    print(resp_data);
     Future.delayed(
       Duration(seconds: 3),
       () {
